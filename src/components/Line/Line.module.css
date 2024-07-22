@@ -1,6 +1,6 @@
 .lineDiv{
     display: flex;
-    background-color: rgb(109, 159, 159);
+    background: image("");
     width: fit-content;
     height: 50px;
 }
