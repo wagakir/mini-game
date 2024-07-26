@@ -6,6 +6,8 @@
     height: 50px;
     min-width: 40px;
     width: 50px;
-    border: solid 1px rgb(0, 0, 0);
+    
+    background-image: url(icons8-texture-100.png);
+    background-size: contain;
 
 }

@@ -1,10 +1,17 @@
-import "./App.css";
+import "./App.scss";
 import React, { useEffect, useState } from "react";
-import CreateArr from "./CreateArray";
+import CreateArray from "./CreateArrayField";
 import Line from "./components/Line";
+import Heart from "./components/Heart";
+import Enemy from "./components/Enemy";
+import Wall from "./components/Wall";
+import PrepeareArrayField from './PrepareArrayField'
 
 function App() {
-  let [fieldArray, setFieldArray] = useState([]);
+  const [fieldArray, setFieldArray] = useState([]);
+  const [hpArray, setHpArray] = useState([]);
+  const [hp, setHp] = useState(7);
+  const maxHp = 7;
   // for (let i = 1; i <= 20; i++){
   //   countLines[
   //     {"cellContent":'false', "id":1},
@@ -39,18 +46,43 @@ function App() {
   //     {"cellContent":'false', "id":30}
   //   ]
   // }
-
+  const hpRender = () => {
+    let tempArr = [];
+    for (let i = 1; i <= maxHp; i++) {
+      if (i <= hp) {
+        tempArr.push(true);
+      } else {
+        tempArr.push(false);
+      }
+      setHpArray(tempArr);
+      // i < hp ? setHpArray(hpArray.concat(true)): setHpArray(hpArray.concat(false))
+    }
+  };
   useEffect(() => {
-    setFieldArray(CreateArr(20, 30));
+    hpRender();
+  }, [hp]);
+  useEffect(() => {
+    // let arr =CreateArray(10, 10)
+    setFieldArray(PrepeareArrayField( CreateArray(10,10)));
+    hpRender();
   }, []);
   return (
     <div className="App">
+      
+      
+      {/* <button
+        className="absolute left-0 h-10 w-10 bg-black"
+        onClick={() => setHp(hp - 1)}
+      ></button> */}
+      <div className="hpBar">
+      {hpArray.map((obj, index) => (
+        <Heart key={index} painted={obj} />
+      ))}
+      </div>
+      
       <div className="wrapper">
         {fieldArray.map((obj) => (
-          
-          <Line key={obj.id}
-          lineArray={obj.lineArray} 
-          />
+          <Line key={obj.id} lineArray={obj.lineArray} />
         ))}
       </div>
     </div>
