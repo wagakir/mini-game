@@ -11,11 +11,11 @@ const CreateArr = (yLenght, xLenght) => {
         tempContent = "enemy";
       }
 
-      if (1 < contentChance && contentChance < 10) {
+      if (1 < contentChance && contentChance < 6) {
         tempContent = "wall";
         
       }
-      if (contentChance === 6) {
+      if (contentChance === 7) {
         tempContent = "heal";
       }
       lineArray.push({

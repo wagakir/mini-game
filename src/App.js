@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import CreateArray from "./CreateArrayField";
 import Line from "./components/Line";
 import Heart from "./components/Heart";
-import Enemy from "./components/Enemy";
-import Wall from "./components/Wall";
-import PrepeareArrayField from './PrepareArrayField'
+import PrepareArrayField from "./PrepareArrayField";
 
 function App() {
-  const [fieldArray, setFieldArray] = useState([]);
+  const [fieldArray, setFieldArray] = useState(
+    PrepareArrayField(CreateArray(26, 26))
+  );
+  const [playerPositionY, setPlayerPositionY] = useState(0);
+  const [playerPositionX, setPlayerPositionX] = useState(0);
   const [hpArray, setHpArray] = useState([]);
-  const [hp, setHp] = useState(7);
+  const [hp, setHp] = useState(5);
   const maxHp = 7;
   // for (let i = 1; i <= 20; i++){
   //   countLines[
@@ -46,7 +48,8 @@ function App() {
   //     {"cellContent":'false', "id":30}
   //   ]
   // }
-  const hpRender = () => {
+  const hpChange = (count) => {
+    setHp(hp + count);
     let tempArr = [];
     for (let i = 1; i <= maxHp; i++) {
       if (i <= hp) {
@@ -55,35 +58,208 @@ function App() {
         tempArr.push(false);
       }
       setHpArray(tempArr);
-      // i < hp ? setHpArray(hpArray.concat(true)): setHpArray(hpArray.concat(false))
     }
   };
+  const setItem = (y, x, item) => {
+    let tempArray = fieldArray.map((obj) => obj);
+    tempArray[y].lineArray[x].cellContent = item;
+    setFieldArray(tempArray);
+  };
+  // const moveMage = (x,y)=>{
+  //   setItem(x,y)
+  //   setItem(x,y)
+  // }
   useEffect(() => {
-    hpRender();
+    hpChange(0);
   }, [hp]);
+
   useEffect(() => {
-    // let arr =CreateArray(10, 10)
-    setFieldArray(PrepeareArrayField( CreateArray(10,10)));
-    hpRender();
+    hpChange(0);
+    // let playerPositionX = 0
+    // let playerPositionY = 0
+    // document.onkeydown = (key) => {
+
+    // if (key.code === "ArrowLeft" || key.code === "KeyA") {
+    // fieldArray[playerPositionY].lineArray[playerPositionX].cellContent = 'empty'
+
+    // playerPositionX--
+    // fieldArray[playerPositionY].lineArray[playerPositionX].cellContent = 'mage'
+    // }
+    // if (key.code === "ArrowUp" || key.code === "KeyW") {
+    // fieldArray[playerPositionY].lineArray[playerPositionX].cellContent = 'empty'
+
+    // playerPositionY--
+    // fieldArray[playerPositionY].lineArray[playerPositionX].cellContent = 'mage'
+    //   }
+
+    // if (key.code === "ArrowRight" || key.code === "KeyD") {
+    //   setItem(playerPositionY, playerPositionX, 'empty')
+    // fieldArray[playerPositionY].lineArray[playerPositionX].cellContent = 'empty'
+
+    // playerPositionX ++
+    // console.log(playerPositionX);
+    // setItem(playerPositionY, playerPositionX, 'mage')
+    // console.log(fieldArray[playerPositionY].lineArray[playerPositionX].cellContent);
+    // fieldArray[playerPositionY].lineArray[playerPositionX].cellContent = 'mage'
+    // }
+    // if (key.code === "ArrowDown" || key.code === "KeyS") {
+    // fieldArray[playerPositionY].lineArray[playerPositionX].cellContent = 'empty'
+    // playerPositionY++
+    // fieldArray[playerPositionY].lineArray[playerPositionX].cellContent = 'mage'
+    // }
+    // setFieldArray(fieldArray)
+    //  };
+    // arrayFieldRemoveContent(0, 3);
+    // arrayFieldRemoveContent(0, 2);
   }, []);
+  document.onkeydown = (key) =>{ 
+   
+    if (key.code === "ArrowLeft" || key.code === "KeyA") {
+      if (playerPositionX !== 0) {
+        if (
+          fieldArray[playerPositionY].lineArray[playerPositionX - 1]
+            .cellContent === "enemy"
+        ) {
+          hpChange(-1);
+        }
+        if (
+          fieldArray[playerPositionY].lineArray[playerPositionX - 1]
+            .cellContent === "empty" ||
+          fieldArray[playerPositionY].lineArray[playerPositionX - 1]
+            .cellContent === "heal"
+        ) {
+          if (
+            fieldArray[playerPositionY].lineArray[playerPositionX - 1]
+              .cellContent === "heal"
+          ) {
+            hpChange(1);
+          }
+          
+          setPlayerPositionX(playerPositionX - 1);
+          let tempPos = playerPositionX;
+          fieldArray[playerPositionY].lineArray[tempPos].cellContent = "empty";
+          tempPos--;
+          fieldArray[playerPositionY].lineArray[tempPos].cellContent = "mage";
+          setFieldArray(fieldArray);
+        }
+      }
+    }
+    if (key.code === "ArrowUp" || key.code === "KeyW") {
+      if (playerPositionY !== 0) {
+        if (
+          fieldArray[playerPositionY - 1].lineArray[playerPositionX]
+            .cellContent === "enemy"
+        ) {
+          hpChange(-1);
+        }
+        if (
+          fieldArray[playerPositionY - 1].lineArray[playerPositionX]
+            .cellContent === "empty" ||
+          fieldArray[playerPositionY - 1].lineArray[playerPositionX]
+            .cellContent === "heal"
+        ) {
+          if (
+            fieldArray[playerPositionY - 1].lineArray[playerPositionX]
+              .cellContent === "heal"
+          ) {
+            hpChange(1);
+          }
+          
+          setPlayerPositionY(playerPositionY - 1);
+          let tempPos = playerPositionY;
+          fieldArray[tempPos].lineArray[playerPositionX].cellContent = "empty";
+          tempPos--;
+          fieldArray[tempPos].lineArray[playerPositionX].cellContent = "mage";
+          setFieldArray(fieldArray);
+        }
+      }
+    }
+
+    if (key.code === "ArrowRight" || key.code === "KeyD") {
+      if (
+        playerPositionX + 1 !==
+        fieldArray[playerPositionY].lineArray.length
+      ) {
+        if (
+          fieldArray[playerPositionY].lineArray[playerPositionX + 1]
+            .cellContent === "enemy"
+        ) {
+          hpChange(-1);
+        }
+        if (
+          fieldArray[playerPositionY].lineArray[playerPositionX + 1]
+            .cellContent === "empty" ||
+          fieldArray[playerPositionY].lineArray[playerPositionX + 1]
+            .cellContent === "heal"
+        ) {
+          if (
+            fieldArray[playerPositionY].lineArray[playerPositionX + 1]
+              .cellContent === "heal"
+          ) {
+            hpChange(1);
+          }
+          
+          setPlayerPositionX(playerPositionX + 1);
+          let tempPos = playerPositionX;
+          setItem(playerPositionY, tempPos, "empty");
+          tempPos++;
+          setItem(playerPositionY, tempPos, "mage");
+        }
+      }
+    }
+    if (key.code === "ArrowDown" || key.code === "KeyS") {
+      if (playerPositionY + 1 !== fieldArray.length) {
+        if (
+          fieldArray[playerPositionY + 1].lineArray[playerPositionX]
+            .cellContent === "enemy"
+        ) {
+          hpChange(-1);
+        }
+        if (
+          fieldArray[playerPositionY + 1].lineArray[playerPositionX]
+            .cellContent === "empty" ||
+          fieldArray[playerPositionY + 1].lineArray[playerPositionX]
+            .cellContent === "heal"
+        ) {
+          if (
+            fieldArray[playerPositionY + 1].lineArray[playerPositionX]
+              .cellContent === "heal"
+          ) {
+            hpChange(1);
+          }
+          
+          setPlayerPositionY(playerPositionY + 1);
+          let tempPos = playerPositionY;
+          fieldArray[tempPos].lineArray[playerPositionX].cellContent = "empty";
+          tempPos++;
+          fieldArray[tempPos].lineArray[playerPositionX].cellContent = "mage";
+          setFieldArray(fieldArray);
+        }
+      }
+    }
+    // console.log( playerPositionX+1 + (playerPositionY+1)  * fieldArray[playerPositionY].lineArray.length)
+  };
   return (
     <div className="App">
-      
-      
       {/* <button
         className="absolute left-0 h-10 w-10 bg-black"
         onClick={() => setHp(hp - 1)}
       ></button> */}
       <div className="hpBar">
-      {hpArray.map((obj, index) => (
-        <Heart key={index} painted={obj} />
-      ))}
-      </div>
-      
-      <div className="wrapper">
-        {fieldArray.map((obj) => (
-          <Line key={obj.id} lineArray={obj.lineArray} />
+        {hpArray.map((obj, index) => (
+          <Heart key={index} painted={obj} />
         ))}
+      </div>
+
+      <div className="wrapper">
+        <div className="overWrapper ">
+        <div className=" absolute m-auto p-auto left-0 right-0 w-fit h-fit ">
+
+        
+      {hp > 0 ? fieldArray.map((obj) => (
+          <Line key={obj.id} lineArray={obj.lineArray} />
+        )): <h1 className="press-start-2p-big ">game over</h1>}
+        </div></div>
       </div>
     </div>
   );

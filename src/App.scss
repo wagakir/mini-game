@@ -1,45 +1,68 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*{padding: 0;
-margin: 0;}
-.App{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    min-width: 350px;
-    
+* {
+  padding: 0;
+  margin: 0;
 }
-.hpBar{
-    display: flex;
-    height: 70px;
-    margin: 5px auto;
-    background: linear-gradient(45grad,#ff9494, #db5757  ) ;
-    padding: 5px 15px;
-    align-items: center;
-    border: solid 2px rgb(114, 114, 114);
-    border-radius: 20px;
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  min-width: 350px;
+  background: linear-gradient(45deg, rgb(149, 73, 38), rgb(111, 35, 14));
 }
-.wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 1000px;
-    height: 600px;
-    
-    min-width: 350px;
-    border: solid 2px yellowgreen;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    bottom: 20px;
-    top: 80px;
-    position: absolute;
-    overflow-x: auto;
-    overflow-y: hidden;
-    
-    background: linear-gradient( 120deg, rgb(8, 8, 8), rgb(89, 89, 85));
+.hpBar {
+  display: flex;
+  height: 70px;
+  margin: 5px auto;
+  background: linear-gradient(45deg, #ff9494, #db5757);
+  padding: 5px 15px;
+  align-items: center;
+  border: solid 2px rgb(114, 114, 114);
+  border-radius: 20px;
 }
+.wrapper {
+  display: flex;
+
+  position: absolute;
+
+  width: 100%;
+  max-width: 1000px;
+  min-width: 350px;
+  max-height: 600px;
+  height: 600px;
+  min-height: 600px;
+  border: solid 2px yellowgreen;
+  border-radius: 20px;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  top: 80px;
+
+  background: linear-gradient(135deg, rgb(101, 61, 61), rgb(92, 92, 67));
+}
+.overWrapper {
+  overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  scrollbar-color: rgb(153, 36, 36) transparent;
+   
+}
+ 
+.press-start-2p-big {
+    margin: auto;
+    top: 0;
+    bottom:  0;
+   
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 50pt;
+  }
+  

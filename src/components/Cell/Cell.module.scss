@@ -1,0 +1,21 @@
+.cellDiv{
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    height: 50px;
+    min-width: 40px;
+    width: 50px;
+    background: rgba(98, 97, 97, 0.467);
+    
+    img{
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+}
+.textureBg{
+    z-index: 1;
+}
