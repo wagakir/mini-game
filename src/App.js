@@ -112,8 +112,7 @@ function App() {
     // arrayFieldRemoveContent(0, 3);
     // arrayFieldRemoveContent(0, 2);
   }, []);
-  document.onkeydown = (key) =>{ 
-   
+  document.onkeydown = (key) => {
     if (key.code === "ArrowLeft" || key.code === "KeyA") {
       if (playerPositionX !== 0) {
         if (
@@ -134,7 +133,7 @@ function App() {
           ) {
             hpChange(1);
           }
-          
+
           setPlayerPositionX(playerPositionX - 1);
           let tempPos = playerPositionX;
           fieldArray[playerPositionY].lineArray[tempPos].cellContent = "empty";
@@ -164,7 +163,7 @@ function App() {
           ) {
             hpChange(1);
           }
-          
+
           setPlayerPositionY(playerPositionY - 1);
           let tempPos = playerPositionY;
           fieldArray[tempPos].lineArray[playerPositionX].cellContent = "empty";
@@ -198,7 +197,7 @@ function App() {
           ) {
             hpChange(1);
           }
-          
+
           setPlayerPositionX(playerPositionX + 1);
           let tempPos = playerPositionX;
           setItem(playerPositionY, tempPos, "empty");
@@ -227,7 +226,7 @@ function App() {
           ) {
             hpChange(1);
           }
-          
+
           setPlayerPositionY(playerPositionY + 1);
           let tempPos = playerPositionY;
           fieldArray[tempPos].lineArray[playerPositionX].cellContent = "empty";
@@ -253,13 +252,16 @@ function App() {
 
       <div className="wrapper">
         <div className="overWrapper ">
-        <div className=" absolute m-auto p-auto left-0 right-0 w-fit h-fit ">
-
-        
-      {hp > 0 ? fieldArray.map((obj) => (
-          <Line key={obj.id} lineArray={obj.lineArray} />
-        )): <h1 className="press-start-2p-big ">game over</h1>}
-        </div></div>
+          <div className=" absolute m-auto p-auto left-0 right-0 w-fit h-fit ">
+            {hp > 0 ? (
+              fieldArray.map((obj) => (
+                <Line key={obj.id} lineArray={obj.lineArray} />
+              ))
+            ) : (
+              <h1 className="press-start-2p-big ">game over</h1>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
